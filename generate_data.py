@@ -1,8 +1,4 @@
-from email.mime import image
 import json
-import os
-import sys
-import random
 
 from sympy import im
 
@@ -32,7 +28,7 @@ def handle_suit(data):
 
 # Process the data to generate the training data for the LLM
 def process_data(data):
-    index = 0
+    index = 1
     process_data = []
     for entry in data:
         # First create the index
@@ -48,6 +44,7 @@ def process_data(data):
         name = " ".join([word.capitalize() for word in name.split()])
         # Check the suit of the card
         suit = handle_suit(entry)
+        keywords = entry["keywords"]
         # Generate the image path
         rank = entry["rank"]
         if rank == "page" and suit != "major":
@@ -84,6 +81,7 @@ def process_data(data):
                 "meaning": meaning,
                 "reversed_meaning": reversed_meaning,
                 "name": name,
+                "keywords": keywords,
                 "image_path": image_path,
                 "suit": suit,
             }
